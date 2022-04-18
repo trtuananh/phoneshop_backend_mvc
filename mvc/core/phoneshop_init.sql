@@ -8,7 +8,7 @@ create table users (
     username 	varchar(20),
     first_name	varchar(30),
     last_name	varchar(30),
-    contact_number	int,
+    contact_number	varchar(30),
     address		text,
     district	text,
     city		text,
