@@ -5,8 +5,7 @@
  * require './php-jwt/src/JWT.php';
  */
 
-require '../php-jwt/src/JWT.php';
-
+require './mvc/models/php-jwt/src/JWT.php';
 use Firebase\JWT\JWT;
 
 class JwtHandler
