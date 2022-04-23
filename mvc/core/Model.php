@@ -16,6 +16,16 @@ class Model {
             die("Connection failed: " . mysqli_connect_error());
         }
     }
+
+    public function dbConnection() {
+        $conn = mysqli_connect($this->servername, $this->username, $this->password, $this->db_name);
+        // Check connection
+        if (!$conn) {
+            echo "null";
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        return $conn;
+    }
 }
 
 ?>

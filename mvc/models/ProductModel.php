@@ -59,7 +59,6 @@ class ProductModel extends Model {
     
     public function readByType($type) {
         $query = 'SELECT * FROM '.$this->db_table.' WHERE type="'.$type.'";';
-        echo $query;
         $stmt = mysqli_query($this->conn, $query);
         $result = array(); 
 
