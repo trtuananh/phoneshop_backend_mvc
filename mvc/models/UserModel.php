@@ -166,7 +166,7 @@ class UserModel extends Model {
 
                     $jwt = new JwtHandler();
                     $token = $jwt->jwtEncodeData(
-                        'http://localhost/phoneshop_backend_mvc/mvc/models/php-jwt/',
+                        'http://localhost/phoneshop_backend_mvc/mvc/models/php-jwt-clone/',
                         array("id"=> $data['id'],
                         )
                     );
