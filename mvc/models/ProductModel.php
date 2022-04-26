@@ -370,6 +370,18 @@ class ProductModel extends Model {
             return false;
         }
     }
+
+    public function searchProduct($name) {
+        $query = 'SELECT * FROM '.$this->db_table.' WHERE product_name = "'.$name.'";';
+        $stmt = mysqli_query($this->conn, $query);
+        $result = array(); 
+
+        while($row = mysqli_fetch_assoc($stmt))
+        {
+            $result[] = $row;
+        }
+        return  $result;
+    }
 }
     
 ?>

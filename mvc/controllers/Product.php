@@ -156,7 +156,12 @@ class Product {
                 if (isset($arr[2]) && is_numeric($arr[2]) && (int)$arr[2]>0) {
                     $this->view->deleteRespond($this->model->delete($arr[2]));
                 }
-                else throw new Exception("Wrong Post ID");
+                else throw new Exception("Wrong Product ID");
+            }
+            else if ($arr[1]=="searchProduct") {
+                if (isset($arr[2])) {
+                    $this->view->readRespond($this->model->searchProduct($arr[2]));
+                }
             }
             else throw new Exception("Wrong URL");
         }
