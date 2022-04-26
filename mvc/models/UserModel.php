@@ -148,7 +148,7 @@ class UserModel extends Model {
     }
 
     public function login($username, $password) {
-        require 'user-auth/JwtHandler.php';
+        require_once "user-auth/VmtHandler.php";
         try{
             
             $query = 'SELECT * FROM '.$this->db_table.' WHERE username ="'.$username.'";';
@@ -164,13 +164,8 @@ class UserModel extends Model {
                 // IF PASSWORD IS CORRECT THEN SEND THE LOGIN TOKEN
                 if($check_password):
 
-                    $jwt = new JwtHandler();
-                    $token = $jwt->jwtEncodeData(
-                        'http://localhost/phoneshop_backend_mvc/mvc/models/php-jwt-clone/',
-                        array("id"=> $data['id'],
-                        )
-                    );
-                    
+                    $vmt = new VmtHandler();
+                    $token = $vmt->VmtEncode(json_encode($data));
                     $returnData = [
                         'message' => 'successful',
                         'token' => $token

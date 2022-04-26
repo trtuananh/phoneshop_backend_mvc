@@ -1,7 +1,7 @@
 <?php
-require 'JwtHandler.php';
+require 'VmtHandler.php';
 
-class Auth extends JwtHandler
+class Auth
 {
     protected $db;
     protected $headers;
@@ -9,7 +9,6 @@ class Auth extends JwtHandler
 
     public function __construct($db, $headers)
     {
-        parent::__construct();
         $this->db = $db;
         $this->headers = $headers;
     }
@@ -18,9 +17,10 @@ class Auth extends JwtHandler
     {
 
         if (array_key_exists('Authorization', $this->headers) && preg_match('/Bearer\s(\S+)/', $this->headers['Authorization'], $matches)) {
-
-            $data = $this->jwtDecodeData($matches[1]);
-
+            //$data = $this->jwtDecodeData($matches[1]);
+            $vmt = new VmtHandler();
+            $data = $vmt->VmtDecode($matches[1]);
+            $data = json_decode($data);
             if (
                 isset($data->id) &&
                 $user = $this->fetchUser($data->id)
