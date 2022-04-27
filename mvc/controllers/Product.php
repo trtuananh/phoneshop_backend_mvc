@@ -87,14 +87,14 @@ class Product {
                 $this->view->createRespond($result);
             }
 
-            else if ($arr[1]=="readByType") {
+            else if ($arr[1]=="readByBrand") {
                 //echo "read\n";
                 //echo $arr[2];
                 //echo is_integer($arr[2]);
                 //echo ((int)$arr[2])>0;
                 if (isset($arr[2])) {
                     //echo "right para";
-                    $result = $this->model->readByType($arr[2]);
+                    $result = $this->model->readByBrand($arr[2]);
                     $this->view->readRespond($result);
                 }
             }
