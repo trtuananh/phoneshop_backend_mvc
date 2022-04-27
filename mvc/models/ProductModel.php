@@ -372,7 +372,7 @@ class ProductModel extends Model {
     }
 
     public function searchProduct($name) {
-        $query = 'SELECT * FROM '.$this->db_table.' WHERE product_name = "'.$name.'";';
+        $query = 'SELECT * FROM '.$this->db_table.' WHERE product_name LIKE \'%'.$name.'%\';';
         $stmt = mysqli_query($this->conn, $query);
         $result = array(); 
 
