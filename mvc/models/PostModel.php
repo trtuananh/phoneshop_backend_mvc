@@ -27,7 +27,7 @@ class PostModel extends Model{
 
     public function create($user_id, $header, $img) {
         $query = "INSERT INTO $this->db_table (user_id, header, img) 
-                VALUES ($user_id, $header, $img)";
+                VALUES ($user_id, '$header', '$img')";
         $stmt = mysqli_query($this->conn, $query);
         
         if($stmt) {

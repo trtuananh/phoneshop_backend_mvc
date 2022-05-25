@@ -7,7 +7,7 @@ header('Access-Control-Allow-Methods: DELETE');
 require_once "./mvc/models/PostModel.php";
 require_once "./mvc/views/PostView.php";
 
-class Order {
+class Post {
     private $model;
     private $view;
 
