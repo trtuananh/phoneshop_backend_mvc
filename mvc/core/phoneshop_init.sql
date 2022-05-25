@@ -8,7 +8,7 @@ create table users (
     username 	varchar(20),
     first_name	varchar(30),
     last_name	varchar(30),
-    contact_number	int,
+    contact_number	varchar(30),
     address		text,
     district	text,
     city		text,
@@ -62,26 +62,26 @@ create table products (
 create table orders (
 	id			int		primary key		auto_increment,
     user_id		int,
-    time		datetime,
-    foreign key (user_id) references users (id)
+    time		datetime 	default current_timestamp,
+    foreign key (user_id) references users (id) on update cascade on delete cascade
 );
 
 create table orders_product (
 	order_id	int,
     product_id	int,
     quantity	int,
-    foreign key (order_id) references orders (id),
-    foreign key (product_id) references products (id)
+    foreign key (order_id) references orders (id) on update cascade on delete cascade,
+    foreign key (product_id) references products (id) on update cascade on delete cascade
 );
 
 
 create table posts (
 	id			int		primary key		auto_increment,
-    time		datetime,
+    time		datetime 	default current_timestamp,
     user_id		int,
     header		text,
     img			varchar(200),
-    foreign key (user_id) references users (id)
+    foreign key (user_id) references users (id) on update cascade on delete cascade
 );
 
 create table reviews (
@@ -90,7 +90,7 @@ create table reviews (
     user_id		int,
     star_rating	float,
     data		text,
-    foreign key (user_id) references users (id),
-    foreign key (product_id) references products (id)
+    foreign key (user_id) references users (id) on update cascade on delete cascade,
+    foreign key (product_id) references products (id) on update cascade on delete cascade
 );
 
