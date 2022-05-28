@@ -38,8 +38,8 @@ class User {
                 $email = '"'.$data->email.'"';
                 $password = '"'.$data->password.'"';
                 $username = '"'.$data->username.'"';
-                $last_name = '"'.$data->last_name.'"';
-                $first_name = '"'.$data->first_name.'"';
+                $last_name = isset($data->lastname) ? '"'.$data->lastname.'"' : "null";
+                $first_name = isset($data->firstname) ? '"'.$data->firstname.'"' : "null";
                 $contact_number= isset($data->contact_number) ? '"'.$data->contact_number.'"' : "null";
                 $address= isset($data->address) ? '"'.$data->address.'"' : "null";
                 $district= isset($data->district) ? '"'.$data->district.'"' : "null";
