@@ -2,16 +2,17 @@
 
 require_once "./mvc/core/Model.php";
 
-class PostModel extends Model{
+class PostModel extends Model {
     private $db_table = "posts";
 
     public function readList() {
-        $query = "SELECT * FROM $this->db_table;";
+        $query = "SELECT * FROM $this->db_table ORDER BY time DESC;";
         $stmt = mysqli_query($this->conn, $query);
         $result = array(); 
 
         while($row = mysqli_fetch_assoc($stmt))
         {
+            $row['blocks'] = json_decode($row['blocks']);
             $result[] = $row;
         }
         return  $result;
@@ -21,13 +22,17 @@ class PostModel extends Model{
         $query = "SELECT * FROM $this->db_table WHERE id=$id;";
         $stmt = mysqli_query($this->conn, $query);
 
-        if (mysqli_num_rows($stmt) > 0) return mysqli_fetch_assoc($stmt);
-        else throw new Exception("Post ID does not exist");
+        if (mysqli_num_rows($stmt) > 0) {
+            $result = mysqli_fetch_assoc($stmt);
+            $result['blocks'] = json_decode($result['blocks']);
+            return $result;
+        }
+        else return array("message" => "Post ID doesn't exist");
     }
 
-    public function create($user_id, $header, $img) {
-        $query = "INSERT INTO $this->db_table (user_id, header, img) 
-                VALUES ($user_id, '$header', '$img')";
+    public function create($user_id, $version, $blocks) {
+        $query = "INSERT INTO $this->db_table (user_id, version, blocks) 
+                VALUES ($user_id, '$version', '" . json_encode($blocks) . "')";
         $stmt = mysqli_query($this->conn, $query);
         
         if($stmt) {
@@ -38,34 +43,24 @@ class PostModel extends Model{
         }
     }
 
-    public function update($id, $header, $img) {
+    public function update($id, $version, $blocks) {
         $condquery = "SELECT * FROM $this->db_table WHERE id=$id";
         $condstmt = mysqli_query($this->conn, $condquery);
-        if (mysqli_num_rows($condstmt)>0) return false;
+        if (mysqli_num_rows($condstmt)<=0) 
+            throw new Exception("wrong post id");
 
-        $flag = 1;
+        $query = "UPDATE $this->db_table SET version=$version, blocks='" . json_encode($blocks) . "' WHERE id=$id";
+        $stmt = mysqli_query($this->conn, $query);
 
-        if ($header) {
-            $query = "UPDATE table_name SET header = $header WHERE id=$id";
-            $stmt = mysqli_query($this->conn, $query);
-        
-            if(!$stmt) $flag = 0; 
-        }
-
-        if ($img) {
-            $query = "UPDATE table_name SET img = $img WHERE id=$id";
-            $stmt = mysqli_query($this->conn, $query);
-        
-            if(!$stmt) $flag = 0; 
-        }
-
-        return $flag;
+        if ($stmt) return true;
+        else return false;
     }
 
     public function delete($id) {
         $condquery = "SELECT * FROM $this->db_table WHERE id=$id";
         $condstmt = mysqli_query($this->conn, $condquery);
-        if (mysqli_num_rows($condstmt)>0) return false;
+        if (mysqli_num_rows($condstmt)<=0) 
+            throw new Exception("wrong post id");
         
         $query = "DELETE FROM $this->db_table WHERE id=$id";
         $stmt = mysqli_query($this->conn, $query);

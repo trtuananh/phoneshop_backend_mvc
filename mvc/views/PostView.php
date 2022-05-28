@@ -9,23 +9,23 @@ class PostView {
 
     public function createRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Add post successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Add post failed"));
+            echo json_encode(array("message" => "error"));
     } 
 
     public function updateRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Update post successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Update post failed"));
+            echo json_encode(array("message" => "error"));
     }
 
     public function deleteRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Delete post successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Delete post failed"));
+            echo json_encode(array("message" => "error"));
     }
 }
 

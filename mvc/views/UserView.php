@@ -9,23 +9,23 @@ class UserView {
 
     public function createRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Add user successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Add user failed"));
+            echo json_encode(array("message" => "error"));
     } 
 
     public function updateRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Update user successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Update user failed"));
+            echo json_encode(array("message" => "error"));
     }
 
     public function deleteRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Delete user successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Delete user failed"));
+            echo json_encode(array("message" => "error"));
     }
 }
 

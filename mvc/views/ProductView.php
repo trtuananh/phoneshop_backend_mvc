@@ -9,23 +9,23 @@ class ProductView {
 
     public function createRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Add product successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Add product failed"));
+            echo json_encode(array("message" => "error"));
     } 
 
     public function updateRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Update product successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Update product failed"));
+            echo json_encode(array("message" => "error"));
     }
 
     public function deleteRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Delete product successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Delete product failed"));
+            echo json_encode(array("message" => "error"));
     }
 }
 

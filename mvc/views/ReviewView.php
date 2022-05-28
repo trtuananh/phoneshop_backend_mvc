@@ -9,23 +9,23 @@ class ReviewView {
 
     public function createRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Add review successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Add review failed"));
+            echo json_encode(array("message" => "error"));
     } 
 
     public function updateRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Update review successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Update review failed"));
+            echo json_encode(array("message" => "error"));
     }
 
     public function deleteRespond($success) {
         if ($success) 
-            echo json_encode(array("Message" => "Delete review successful"));
+            echo json_encode(array("message" => "success"));
         else 
-            echo json_encode(array("Message" => "Delete review failed"));
+            echo json_encode(array("message" => "error"));
     }
 }
 

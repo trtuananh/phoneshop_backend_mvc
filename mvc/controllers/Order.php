@@ -21,8 +21,8 @@ class Order {
                 $data = json_decode(file_get_contents("php://input"));
 
                 $user_id = $data->user_id;
-                $productList = $data->productList;
-                $this->view->createRespond($this->model->create($user_id, $productList));
+                $product_list = $data->product_list;
+                $this->view->createRespond($this->model->create($user_id, $product_list));
             }
             else if ($arr[1]=="read") {
                 //echo "read\n";
@@ -34,11 +34,11 @@ class Order {
                     $result = $this->model->read((int)$arr[2]);
                     $this->view->readRespond($result);
                 }
-                else throw new Exception("Wrong URL");
+                else throw new Exception("wrong user id");
             }
-            else throw new Exception("Wrong URL");
+            else throw new Exception("wrong URL");
         }
-        else throw new Exception("Wrong URL");
+        else throw new Exception("wrong URL");
     }
 
 }

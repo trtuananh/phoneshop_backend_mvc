@@ -5,11 +5,9 @@ require_once "./mvc/models/OrderProductModel.php";
 
 class OrderModel extends Model {
     private $db_table = "orders";
-    private static $count = 0;
     private $orderProduct;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
         $this->orderProduct = new OrderProductModel();
@@ -17,7 +15,7 @@ class OrderModel extends Model {
 
     public function read($user_id) {
         //if (!$this->conn) echo "null";
-        $query = "SELECT * FROM $this->db_table WHERE user_id=$user_id";
+        $query = "SELECT * FROM $this->db_table WHERE user_id=$user_id ORDER BY time DESC";
         $stmt = mysqli_query($this->conn, $query);
         $result = array(); 
 
@@ -39,11 +37,10 @@ class OrderModel extends Model {
 
         foreach ($productList as $val) {
             
-            if (!$this->orderProduct->create(self::$count, $val->product_id, $val->quantity)) 
+            if (!$this->orderProduct->create(mysqli_insert_id($this->conn), $val->product_id, $val->quantity)) 
                 return false;
         }
         if($stmt) {
-            self::$count++;
             return true;
         }
         else {

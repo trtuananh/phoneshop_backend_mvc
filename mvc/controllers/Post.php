@@ -23,9 +23,9 @@ class Post {
                 $data = json_decode(file_get_contents("php://input"));
 
                 $user_id = $data->user_id;
-                $header = $data->header;
-                $img = $data->img;
-                $this->view->createRespond($this->model->create($user_id, $header, $img));
+                $version = $data->version;
+                $blocks = $data->blocks;
+                $this->view->createRespond($this->model->create($user_id, $version, $blocks));
             }
             else if ($arr[1]=="read") {
                 //echo "read\n";
@@ -45,20 +45,20 @@ class Post {
             else if ($arr[1]=="update") {
                 $data = json_decode(file_get_contents("php://input"));
 
-                $id = $data->id;
-                $header = $data->header;
-                $img = $data->img;
-                $this->view->updateRespond($this->model->update($id, $header, $img));
+                $id = $data->post_id;
+                $version = $data->version;
+                $blocks = $data->blocks;
+                $this->view->updateRespond($this->model->update($id, $version, $blocks));
             }
             else if ($arr[1]=="delete") {
                 if (isset($arr[2]) && is_numeric($arr[2]) && (int)$arr[2]>0) {
                     $this->view->deleteRespond($this->model->delete($arr[2]));
                 }
-                else throw new Exception("Wrong Post ID");
+                else throw new Exception("wrong post id");
             }
-            else throw new Exception("Wrong URL");
+            else throw new Exception("wrong URL");
         }
-        else throw new Exception("Wrong URL");
+        else throw new Exception("wrong URL");
     }
 
 }

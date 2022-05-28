@@ -27,7 +27,7 @@ class Review {
                 $star_rating = $data->star_rating;
                 $content = $data->content;
                 //echo $content;
-                $this->view->createRespond($this->model->create($product_id, $user_id, $star_rating, $content));
+                $this->view->createRespond($this->model->create($user_id, $product_id, $star_rating, $content));
             }
             else if ($arr[1]=="read") {
                 //echo "read\n";
@@ -39,14 +39,14 @@ class Review {
                     $result = $this->model->read((int)$arr[2]);
                     $this->view->readRespond($result);
                 }
-                else throw new Exception("Wrong Product ID");
+                else throw new Exception("wrong product id");
             }
             else if ($arr[1]=="update") {
                 $data = json_decode(file_get_contents("php://input"));
 
-                $id = $data->id;
+                $id = $data->review_id;
                 $star_rating = $data->star_rating;
-                $content = $data->data;
+                $content = $data->content;
                 
                 $this->view->updateRespond($this->model->update($id, $star_rating, $content));
             }
@@ -54,11 +54,11 @@ class Review {
                 if (isset($arr[2]) && is_numeric($arr[2]) && (int)$arr[2]>0) {
                     $this->view->deleteRespond($this->model->delete($arr[2]));
                 }
-                else throw new Exception("Wrong Review ID");
+                else throw new Exception("wrong review id");
             }
-            else throw new Exception("Wrong URL");
+            else throw new Exception("wrong URL");
         }
-        else throw new Exception("Wrong URL");
+        else throw new Exception("wrong URL");
     }
 
 }

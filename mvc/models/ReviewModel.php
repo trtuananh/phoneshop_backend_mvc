@@ -17,8 +17,8 @@ class ReviewModel extends Model {
         return  $result;
     }
 
-    public function create($product_id, $user_id, $star_rating, $content) {
-        $condquery = "SELECT * FROM $this->db_table WHERE product_id=$product_id, user_id=$user_id";
+    public function create($user_id, $product_id, $star_rating, $content) {
+        $condquery = "SELECT * FROM $this->db_table WHERE product_id=$product_id AND user_id=$user_id";
         $condstmt = mysqli_query($this->conn, $condquery);
         if (mysqli_num_rows($condstmt)>0) return false;
 
@@ -34,42 +34,29 @@ class ReviewModel extends Model {
         }
     }
 
-    public function update($id, $star_rating, $data) {
-        $condquery = "SELECT * FROM $this->db_table WHERE id=$id";
+    public function update($id, $star_rating, $content) {
+        $condquery = "SELECT * FROM $this->db_table WHERE id = $id";
         $condstmt = mysqli_query($this->conn, $condquery);
-        if (mysqli_num_rows($condstmt)==0) return false;
+        if (mysqli_fetch_assoc($condstmt)==null) 
+            throw new Exception("wrong review id");
 
-        $flag = 1;
-        
-        if ($star_rating) {
-            $query = "UPDATE table_name
-            SET star_rating = $star_rating
-            WHERE id=$id";
-            $stmt = mysqli_query($this->conn, $query);
-        
-            if(!$stmt) $flag = 0; 
-        }
+        $query = "UPDATE $this->db_table SET star_rating = $star_rating, content = '$content'
+                WHERE id = $id";
+        $stmt = mysqli_query($this->conn, $query);
 
-        if ($data) {
-            $query = "UPDATE table_name
-            SET data = $data
-            WHERE id=$id";
-            $stmt = mysqli_query($this->conn, $query);
-        
-            if(!$stmt) $flag = 0; 
-        }
-
-        return $flag;
+        if ($stmt) return true;
+        else return false;
     }
 
     public function delete($id) {
-        $condquery = "SELECT * FROM $this->db_table WHERE id=$id";
+        $condquery = "SELECT * FROM $this->db_table WHERE id = $id";
         $condstmt = mysqli_query($this->conn, $condquery);
-        if (mysqli_num_rows($condstmt)==0) return false;
-        
-        $query = "DELETE FROM $this->db_table WHERE id=$id";
+        if (mysqli_fetch_assoc($condstmt)==null) 
+            throw new Exception("wrong review id");
+
+        $query = "DELETE FROM $this->db_table WHERE id = $id";
         $stmt = mysqli_query($this->conn, $query);
-        
+
         if($stmt) {
             return true;
         }

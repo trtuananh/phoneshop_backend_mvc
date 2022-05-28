@@ -11,7 +11,7 @@ class ErrorView {
     }
 
     public function respond() {
-        echo json_encode(array("error" => $this->message));
+        echo json_encode(array("message" => $this->message));
     } 
 }
 
