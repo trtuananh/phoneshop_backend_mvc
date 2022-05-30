@@ -3,7 +3,7 @@
 class Model {
     protected $servername = "localhost";
     protected $username = "root";
-    protected $password = "";
+    protected $password = "tiachop1";
     protected $db_name = "phoneshop";
     protected $conn;
 
