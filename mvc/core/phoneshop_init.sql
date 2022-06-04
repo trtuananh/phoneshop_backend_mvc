@@ -4,7 +4,7 @@ use phoneshop;
 create table users (
 	id			int		primary key		auto_increment,
     email 		varchar(30),
-    password 	varchar(15),
+    password 	varchar(100),
     username 	varchar(20),
     first_name	varchar(30),
     last_name	varchar(30),
@@ -29,7 +29,7 @@ create table products (
     hf_4				text,
     star_review			float,
     description			text,
-    screen_size			varchar(100),
+    screen_size			int,
     screen_tech			varchar(100),
     screen_phan_giai	varchar(100),
     screen_lam_tuoi		varchar(100),
@@ -41,9 +41,9 @@ create table products (
     CPU_chipset			varchar(100),
     CPU_thong_so		varchar(100),
     CPU_GPU				varchar(100),
-    RAM_dung_luong		varchar(100),
-    RAM_bo_nho_trong	varchar(100),
-    pin_dung_luong		varchar(100),
+    RAM_dung_luong		int,
+    RAM_bo_nho_trong	int,
+    pin_dung_luong		int,
     pin_sac				varchar(100),
     pin_cong_sac		varchar(100),
     communicate_sim		varchar(100),
@@ -56,7 +56,9 @@ create table products (
     design_size			varchar(100),
     design_weight		varchar(100),
     design_chatluong	varchar(100),
-    design_khung_vien	varchar(100)
+    design_khung_vien	varchar(100),
+    time_create         datetime,
+    time_modified		datetime
 );
 
 create table orders (

@@ -32,17 +32,27 @@ class UserModel extends Model {
     public function create($email, $password, $username, $first_name, $last_name, $contact_number,
     $address, $district, $city, $role, $profile_img) 
         {
+            $subquery = 'SELECT * FROM '.$this->db_table.' WHERE email = '.$email.'';
+            $substmt = mysqli_query($this->conn, $subquery);
+            if (mysqli_num_rows($substmt) > 0) {
+                return 1;
+            }
+            $subquery2 = 'SELECT * FROM '.$this->db_table.' WHERE username = '.$username.'';
+            $substmt2 = mysqli_query($this->conn, $subquery2);
+            if (mysqli_num_rows($substmt2) > 0) {
+                return 2;
+            }
             $query = 'INSERT INTO '.$this->db_table.' (email, password, username, first_name, last_name, contact_number,
                 address, district, city, role, profile_img) 
-                VALUES ('.$email.', '.$password.', '.$username.', '.$first_name.', '.$last_name.', '.$contact_number.',
+                VALUES ('.$email.', md5('.$password.'), '.$username.', '.$first_name.', '.$last_name.', '.$contact_number.',
                 '.$address.', '.$district.', '.$city.', '.$role.', '.$profile_img.')';
             
             $stmt = mysqli_query($this->conn, $query);    
             if($stmt) {
-                return true;
+                return 3;
             }
             else {
-                return false;
+                return 4;
             }
         }
     
@@ -61,7 +71,7 @@ class UserModel extends Model {
             }
 
             if ($password != "null") {
-                $query = 'UPDATE '.$this->db_table.' SET password = '.$password.' WHERE id='.$id.'';
+                $query = 'UPDATE '.$this->db_table.' SET password = md5('.$password.') WHERE id='.$id.'';
                 $stmt = mysqli_query($this->conn, $query);
         
                 if(!$stmt) $flag = 0; 
@@ -158,7 +168,7 @@ class UserModel extends Model {
                 $row = mysqli_fetch_assoc($query_stmt);
                 $data = $row;
                 $check_password = false;
-                if ($data["password"] == $password) $check_password = true;
+                if ($data["password"] == md5($password)) $check_password = true;
 
                 // VERIFYING THE PASSWORD (IS CORRECT OR NOT?)
                 // IF PASSWORD IS CORRECT THEN SEND THE LOGIN TOKEN

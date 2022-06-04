@@ -41,7 +41,7 @@ class User {
                 $city= isset($data->city) ? '"'.$data->city.'"' : "null";
                 $role= isset($data->role) ? '"'.$data->role.'"' : "null";
                 $profile_img= isset($data->profile_img) ? '"'.$data->profile_img.'"' : "null";
-                $this->view->createRespond($this->model->create($email, $password, $username, $first_name, 
+                $this->view->AddUserRespond($this->model->create($email, $password, $username, $first_name, 
                    $last_name, $contact_number, $address, $district, $city, $role, $profile_img));
 
             }
