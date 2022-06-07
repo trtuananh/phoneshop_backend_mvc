@@ -1,3 +1,5 @@
+SET GLOBAL max_allowed_packet=10485760;
+
 drop schema if exists phoneshop;
 create schema phoneshop;
 use phoneshop;
@@ -78,7 +80,7 @@ create table posts (
     time		timestamp 	default current_timestamp on update current_timestamp,
     user_id		int,
     version     varchar(30),
-    blocks      JSON
+    blocks      json
 );
 
 create table reviews (
@@ -89,4 +91,3 @@ create table reviews (
     content		text,
     time        timestamp   default current_timestamp on update current_timestamp
 );
-
