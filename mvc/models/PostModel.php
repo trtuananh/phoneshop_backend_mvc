@@ -32,7 +32,7 @@ class PostModel extends Model {
 
     public function create($user_id, $version, $blocks) {
         $query = "INSERT INTO $this->db_table (user_id, version, blocks) 
-                VALUES ($user_id, '$version', '" . json_encode($blocks) . "')";
+                VALUES ($user_id, '$version', " . json_encode($blocks) . ")";
         $stmt = mysqli_query($this->conn, $query);
         
         if($stmt) {
