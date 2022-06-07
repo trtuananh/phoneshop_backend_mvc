@@ -46,7 +46,8 @@ class Auth
     protected function fetchUser($user_id)
     {
         try {
-            $query = 'SELECT * FROM users WHERE id='.$user_id.';';
+            $query = 'SELECT id, email, username, first_name, last_name, contact_number, address, district,
+            city, role, profile_img FROM users WHERE id='.$user_id.';';
             $query_stmt = mysqli_query($this->db, $query);
             if(mysqli_num_rows($query_stmt)>0) {
                 $row = mysqli_fetch_assoc($query_stmt);
