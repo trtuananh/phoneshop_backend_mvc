@@ -81,8 +81,38 @@ create table posts (
 	id			int		primary key		auto_increment,
     time		timestamp 	default current_timestamp on update current_timestamp,
     user_id		int,
-    version     varchar(30),
-    blocks      json
+    version     varchar(30)
+);
+
+create table blocks (
+    id			int		primary key		auto_increment,
+    post_id     int,
+    id_code     varchar(30),
+    type        varchar(10),
+    foreign key (post_id) references posts (id) on update cascade on delete cascade
+);
+
+create table header (
+    block_id    int,
+    text        mediumtext,
+    level       int,
+    foreign key (block_id) references blocks (id) on update cascade on delete cascade
+);
+
+create table paragraph (
+    block_id    int,
+    text        mediumtext,
+    foreign key (block_id) references blocks (id) on update cascade on delete cascade
+);
+
+create table image (
+    block_id    int,
+    url         longtext,
+    caption     text,
+    withBorder  boolean,
+    withBackground  boolean,
+    stretched   boolean,
+    foreign key (block_id) references blocks (id) on update cascade on delete cascade
 );
 
 create table reviews (
