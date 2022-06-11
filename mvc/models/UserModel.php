@@ -32,6 +32,16 @@ class UserModel extends Model {
     public function create($email, $password, $username, $first_name, $last_name, $contact_number,
     $address, $district, $city, $role, $profile_img) 
         {
+            // check if email valid
+            if (strlen($email) < 5) return -1;
+            else if (strpos($email, "@") > strrpos($email, ".")) return -2;
+
+            // check if username valid
+            if (strlen($username) < 5 || strlen($username) > 50 || is_numeric($username[0])) return -1;
+
+            // check if password valid
+            if (strlen($password) < 5 || strlen($password) > 50) return 0;
+
             $subquery = 'SELECT * FROM '.$this->db_table.' WHERE email = '.$email.'';
             $substmt = mysqli_query($this->conn, $subquery);
             if (mysqli_num_rows($substmt) > 0) {
