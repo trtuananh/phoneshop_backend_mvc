@@ -170,7 +170,18 @@ class UserModel extends Model {
     public function login($username, $password) {
         require_once "user-auth/VmtHandler.php";
         try{
-            
+            // check if email is valid
+            if (strlen($email) < 5) throw new Exception("Imvalid email");
+            else if (strpos($email, "@") > strrpos($email, ".")) throw new Exception("Imvalid email");
+
+            // check if username valid
+            if (strlen($username) < 5 || strlen($username) > 50 || is_numeric($username[0])) 
+                throw new Exception("Imvalid username");
+
+            // check if password valid
+            if (strlen($password) < 5 || strlen($password) > 50) 
+                throw new Exception("Password must be in 5-50 characters");
+
             $query = 'SELECT * FROM '.$this->db_table.' WHERE username ="'.$username.'";';
             $query_stmt = mysqli_query($this->conn, $query);
             // IF THE USER IS FOUNDED BY EMAIL
@@ -202,7 +213,10 @@ class UserModel extends Model {
             endif;
         }
         catch(PDOException $e){
-            return $e->getMessage();
+            return array("message" => $e->getMessage());
+        }
+        catch (Exception $e) {
+            return array("message" => $e->getMessage());
         }
         return $returnData;
     }

@@ -35,7 +35,7 @@ create table products (
     screen_tech			varchar(100),
     screen_phan_giai	varchar(100),
     screen_lam_tuoi		varchar(100),
-    backcam_thong_so	varchar(100),
+    backcam_thong_so	text,
     backcam_quay		varchar(100),
     backcam_feature		varchar(100),
     frontcam_thong_so	varchar(100),
