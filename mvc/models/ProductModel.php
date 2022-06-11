@@ -151,7 +151,7 @@ class ProductModel extends Model {
             }
 
             if ($description != "null") {
-                $query = 'UPDATE '.$this->db_table.' SET des$description = '.$description.', time_modified = NOW() WHERE id='.$id.'';
+                $query = 'UPDATE '.$this->db_table.' SET description = '.$description.', time_modified = NOW() WHERE id='.$id.'';
                 $stmt = mysqli_query($this->conn, $query);
         
                 if(!$stmt) $flag = 0; 
