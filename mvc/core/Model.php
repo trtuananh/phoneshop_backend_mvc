@@ -1,10 +1,10 @@
 <?php 
 
 class Model {
-    protected $servername = "localhost";
-    protected $username = "root";
-    protected $password = "1234";
-    protected $db_name = "phoneshop";
+    protected $servername = "fdb33.awardspace.net";
+    protected $username = "4119014_webass";
+    protected $password = "webassignment212";
+    protected $db_name = "4119014_webass";
     protected $conn;
 
     public function __construct()
