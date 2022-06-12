@@ -1,5 +1,7 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 header('Content-Type: application/json');
 
 class PostView {

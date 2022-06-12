@@ -48,7 +48,7 @@ class Product {
                 $hf_4= isset($data->hf_4) ? '"'.$data->hf_4.'"' : "null"; 
                 $star_review= isset($data->star_review) ? $data->star_review : "null";
                 $description= isset($data->description) ? '"'.$data->description.'"' : "null";
-                $screen_size= isset($data->screen_size) ? '"'.$data->screen_size.'"' : "null";
+                $screen_size= isset($data->screen_size) ? $data->screen_size : "null";
                 $screen_tech= isset($data->screen_tech) ? '"'.$data->screen_tech.'"' : "null";
                 $screen_phan_giai= isset($data->screen_phan_giai) ? '"'.$data->screen_phan_giai.'"' : "null";
                 $screen_lam_tuoi= isset($data->screen_lam_tuoi) ? '"'.$data->screen_lam_tuoi.'"' : "null"; 
@@ -60,9 +60,9 @@ class Product {
                 $CPU_chipset= isset($data->CPU_chipset) ? '"'.$data->CPU_chipset.'"' : "null";
                 $CPU_thong_so= isset($data->CPU_thong_so) ? '"'.$data->CPU_thong_so.'"' : "null";
                 $CPU_GPU= isset($data->CPU_GPU) ? '"'.$data->CPU_GPU.'"' : "null";
-                $RAM_dung_luong= isset($data->RAM_dung_luong) ? '"'.$data->RAM_dung_luong.'"' : "null";
-                $RAM_bo_nho_trong= isset($data->RAM_bo_nho_trong) ? '"'.$data->RAM_bo_nho_trong.'"' : "null";
-                $pin_dung_luong= isset($data->pin_dung_luong) ? '"'.$data->pin_dung_luong.'"' : "null";
+                $RAM_dung_luong= isset($data->RAM_dung_luong) ? $data->RAM_dung_luong : "null";
+                $RAM_bo_nho_trong= isset($data->RAM_bo_nho_trong) ? $data->RAM_bo_nho_trong : "null";
+                $pin_dung_luong= isset($data->pin_dung_luong) ? $data->pin_dung_luong : "null";
                 $pin_sac= isset($data->pin_sac) ? '"'.$data->pin_sac.'"' : "null";
                 $pin_cong_sac= isset($data->pin_cong_sac) ? '"'.$data->pin_cong_sac.'"' : "null";
                 $communicate_sim= isset($data->communicate_sim) ? '"'.$data->communicate_sim.'"' : "null";
@@ -88,10 +88,7 @@ class Product {
             }
 
             else if ($arr[1]=="readByBrand") {
-                //echo "read\n";
-                //echo $arr[2];
-                //echo is_integer($arr[2]);
-                //echo ((int)$arr[2])>0;
+                
                 if (isset($arr[2])) {
                     //echo "right para";
                     $result = $this->model->readByBrand($arr[2]);
@@ -104,7 +101,7 @@ class Product {
                 
                 $id = $data->id;
                 $product_name = isset($data->product_name) ? '"'.$data->product_name.'"' : "null";
-                $price = isset($data->price) ? '"'.$data->price.'"' : "null";
+                $price = isset($data->price) ? $data->price : "null";
                 $image = isset($data->image) ? '"'.$data->image.'"' : "null";
                 $type = isset($data->type) ? '"'.$data->type.'"' : "null";
                 $brand = isset($data->brand) ? '"'.$data->brand.'"' : "null";
@@ -114,7 +111,7 @@ class Product {
                 $hf_4= isset($data->hf_4) ? '"'.$data->hf_4.'"' : "null"; 
                 $star_review= isset($data->star_review) ? $data->star_review : "null";
                 $description= isset($data->description) ? '"'.$data->description.'"' : "null";
-                $screen_size= isset($data->screen_size) ? '"'.$data->screen_size.'"' : "null";
+                $screen_size= isset($data->screen_size) ? $data->screen_size : "null";
                 $screen_tech= isset($data->screen_tech) ? '"'.$data->screen_tech.'"' : "null";
                 $screen_phan_giai= isset($data->screen_phan_giai) ? '"'.$data->screen_phan_giai.'"' : "null";
                 $screen_lam_tuoi= isset($data->screen_lam_tuoi) ? '"'.$data->screen_lam_tuoi.'"' : "null"; 
@@ -126,9 +123,9 @@ class Product {
                 $CPU_chipset= isset($data->CPU_chipset) ? '"'.$data->CPU_chipset.'"' : "null";
                 $CPU_thong_so= isset($data->CPU_thong_so) ? '"'.$data->CPU_thong_so.'"' : "null";
                 $CPU_GPU= isset($data->CPU_GPU) ? '"'.$data->CPU_GPU.'"' : "null";
-                $RAM_dung_luong= isset($data->RAM_dung_luong) ? '"'.$data->RAM_dung_luong.'"' : "null";
-                $RAM_bo_nho_trong= isset($data->RAM_bo_nho_trong) ? '"'.$data->RAM_bo_nho_trong.'"' : "null";
-                $pin_dung_luong= isset($data->pin_dung_luong) ? '"'.$data->pin_dung_luong.'"' : "null";
+                $RAM_dung_luong= isset($data->RAM_dung_luong) ? $data->RAM_dung_luong : "null";
+                $RAM_bo_nho_trong= isset($data->RAM_bo_nho_trong) ? $data->RAM_bo_nho_trong : "null";
+                $pin_dung_luong= isset($data->pin_dung_luong) ? $data->pin_dung_luong : "null";
                 $pin_sac= isset($data->pin_sac) ? '"'.$data->pin_sac.'"' : "null";
                 $pin_cong_sac= isset($data->pin_cong_sac) ? '"'.$data->pin_cong_sac.'"' : "null";
                 $communicate_sim= isset($data->communicate_sim) ? '"'.$data->communicate_sim.'"' : "null";
@@ -162,6 +159,25 @@ class Product {
                 if (isset($arr[2])) {
                     $this->view->readRespond($this->model->searchProduct($arr[2]));
                 }
+            }
+            else if ($arr[1]=="filter") {
+                $data = json_decode(file_get_contents("php://input"));
+                $brand = isset($data->brand) ? '"'.$data->brand.'"' : '"%"';
+                $price_low_threshold = isset($data->price_low_threshold) ? $data->price_low_threshold : -100;
+                $price_high_threshold = isset($data->price_high_threshold) ? $data->price_high_threshold : 999999999999999;
+                $screen_size_low_threshold = isset($data->screen_size_low_threshold) ? $data->screen_size_low_threshold : -100;
+                $screen_size_high_threshold = isset($data->screen_size_high_threshold) ? $data->screen_size_high_threshold : 999999999999999;
+                $RAM_dung_luong_low_threshold = isset($data->RAM_dung_luong_low_threshold) ? $data->RAM_dung_luong_low_threshold : -100;
+                $RAM_dung_luong_high_threshold = isset($data->RAM_dung_luong_high_threshold) ? $data->RAM_dung_luong_high_threshold : 999999999999999;
+                $pin_dung_luong_low_threshold = isset($data->pin_dung_luong_low_threshold) ? $data->pin_dung_luong_low_threshold : -100;
+                $pin_dung_luong_high_threshold = isset($data->pin_dung_luong_high_threshold) ? $data->pin_dung_luong_high_threshold : 999999999999999;
+                $RAM_bo_nho_trong_low_threshold = isset($data->RAM_bo_nho_trong_low_threshold) ? $data->RAM_bo_nho_trong_low_threshold : -100;
+                $RAM_bo_nho_trong_high_threshold = isset($data->RAM_bo_nho_trong_high_threshold) ? $data->RAM_bo_nho_trong_high_threshold : 999999999999999;
+
+                $this->view->readRespond($this->model->filter($brand, $price_low_threshold, $price_high_threshold,
+                $screen_size_low_threshold, $screen_size_high_threshold, $RAM_dung_luong_low_threshold, 
+                $RAM_dung_luong_high_threshold, $pin_dung_luong_low_threshold, $pin_dung_luong_high_threshold,
+                $RAM_bo_nho_trong_low_threshold, $RAM_bo_nho_trong_high_threshold));
             }
             else throw new Exception("Wrong URL");
         }

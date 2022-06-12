@@ -1,10 +1,12 @@
+SET GLOBAL max_allowed_packet=10485760;
+
 drop schema if exists phoneshop;
 create schema phoneshop;
 use phoneshop;
 create table users (
 	id			int		primary key		auto_increment,
     email 		varchar(30),
-    password 	varchar(15),
+    password 	varchar(100),
     username 	varchar(20),
     first_name	varchar(30),
     last_name	varchar(30),
@@ -29,21 +31,21 @@ create table products (
     hf_4				text,
     star_review			float,
     description			text,
-    screen_size			varchar(100),
+    screen_size			int,
     screen_tech			varchar(100),
     screen_phan_giai	varchar(100),
     screen_lam_tuoi		varchar(100),
-    backcam_thong_so	varchar(100),
-    backcam_quay		varchar(100),
-    backcam_feature		varchar(100),
+    backcam_thong_so	text,
+    backcam_quay		text,
+    backcam_feature		text,
     frontcam_thong_so	varchar(100),
     frontcam_video		varchar(100),
     CPU_chipset			varchar(100),
     CPU_thong_so		varchar(100),
     CPU_GPU				varchar(100),
-    RAM_dung_luong		varchar(100),
-    RAM_bo_nho_trong	varchar(100),
-    pin_dung_luong		varchar(100),
+    RAM_dung_luong		int,
+    RAM_bo_nho_trong	int,
+    pin_dung_luong		int,
     pin_sac				varchar(100),
     pin_cong_sac		varchar(100),
     communicate_sim		varchar(100),
@@ -56,7 +58,9 @@ create table products (
     design_size			varchar(100),
     design_weight		varchar(100),
     design_chatluong	varchar(100),
-    design_khung_vien	varchar(100)
+    design_khung_vien	varchar(100),
+    time_create         datetime,
+    time_modified		datetime
 );
 
 create table orders (
@@ -77,8 +81,38 @@ create table posts (
 	id			int		primary key		auto_increment,
     time		timestamp 	default current_timestamp on update current_timestamp,
     user_id		int,
-    version     varchar(30),
-    blocks      JSON
+    version     varchar(30)
+);
+
+create table blocks (
+    id			int		primary key		auto_increment,
+    post_id     int,
+    id_code     varchar(30),
+    type        varchar(10),
+    foreign key (post_id) references posts (id) on update cascade on delete cascade
+);
+
+create table header (
+    block_id    int,
+    text        mediumtext,
+    level       int,
+    foreign key (block_id) references blocks (id) on update cascade on delete cascade
+);
+
+create table paragraph (
+    block_id    int,
+    text        mediumtext,
+    foreign key (block_id) references blocks (id) on update cascade on delete cascade
+);
+
+create table image (
+    block_id    int,
+    url         longtext,
+    caption     text,
+    withBorder  boolean,
+    withBackground  boolean,
+    stretched   boolean,
+    foreign key (block_id) references blocks (id) on update cascade on delete cascade
 );
 
 create table reviews (
@@ -89,4 +123,3 @@ create table reviews (
     content		text,
     time        timestamp   default current_timestamp on update current_timestamp
 );
-

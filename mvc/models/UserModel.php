@@ -32,17 +32,37 @@ class UserModel extends Model {
     public function create($email, $password, $username, $first_name, $last_name, $contact_number,
     $address, $district, $city, $role, $profile_img) 
         {
+            // check if email valid
+            if (strlen($email) < 5) return -1;
+            else if (strpos($email, "@") > strrpos($email, ".")) return -2;
+
+            // check if username valid
+            if (strlen($username) < 5 || strlen($username) > 50 || is_numeric($username[0])) return -1;
+
+            // check if password valid
+            if (strlen($password) < 5 || strlen($password) > 50) return 0;
+
+            $subquery = 'SELECT * FROM '.$this->db_table.' WHERE email = '.$email.'';
+            $substmt = mysqli_query($this->conn, $subquery);
+            if (mysqli_num_rows($substmt) > 0) {
+                return 1;
+            }
+            $subquery2 = 'SELECT * FROM '.$this->db_table.' WHERE username = '.$username.'';
+            $substmt2 = mysqli_query($this->conn, $subquery2);
+            if (mysqli_num_rows($substmt2) > 0) {
+                return 2;
+            }
             $query = 'INSERT INTO '.$this->db_table.' (email, password, username, first_name, last_name, contact_number,
                 address, district, city, role, profile_img) 
-                VALUES ('.$email.', '.$password.', '.$username.', '.$first_name.', '.$last_name.', '.$contact_number.',
+                VALUES ('.$email.', md5('.$password.'), '.$username.', '.$first_name.', '.$last_name.', '.$contact_number.',
                 '.$address.', '.$district.', '.$city.', '.$role.', '.$profile_img.')';
             
             $stmt = mysqli_query($this->conn, $query);    
             if($stmt) {
-                return true;
+                return 3;
             }
             else {
-                return false;
+                return 4;
             }
         }
     
@@ -61,7 +81,7 @@ class UserModel extends Model {
             }
 
             if ($password != "null") {
-                $query = 'UPDATE '.$this->db_table.' SET password = '.$password.' WHERE id='.$id.'';
+                $query = 'UPDATE '.$this->db_table.' SET password = md5('.$password.') WHERE id='.$id.'';
                 $stmt = mysqli_query($this->conn, $query);
         
                 if(!$stmt) $flag = 0; 
@@ -150,7 +170,14 @@ class UserModel extends Model {
     public function login($username, $password) {
         require_once "user-auth/VmtHandler.php";
         try{
-            
+            // check if username valid
+            if (strlen($username) < 5 || strlen($username) > 50 || is_numeric($username[0])) 
+                throw new Exception("Invalid username");
+
+            // check if password valid
+            if (strlen($password) < 5 || strlen($password) > 50) 
+                throw new Exception("Password must be in 5-50 characters");
+
             $query = 'SELECT * FROM '.$this->db_table.' WHERE username ="'.$username.'";';
             $query_stmt = mysqli_query($this->conn, $query);
             // IF THE USER IS FOUNDED BY EMAIL
@@ -158,7 +185,7 @@ class UserModel extends Model {
                 $row = mysqli_fetch_assoc($query_stmt);
                 $data = $row;
                 $check_password = false;
-                if ($data["password"] == $password) $check_password = true;
+                if ($data["password"] == md5($password)) $check_password = true;
 
                 // VERIFYING THE PASSWORD (IS CORRECT OR NOT?)
                 // IF PASSWORD IS CORRECT THEN SEND THE LOGIN TOKEN
@@ -182,7 +209,10 @@ class UserModel extends Model {
             endif;
         }
         catch(PDOException $e){
-            return $e->getMessage();
+            return array("message" => $e->getMessage());
+        }
+        catch (Exception $e) {
+            return array("message" => $e->getMessage());
         }
         return $returnData;
     }

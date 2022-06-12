@@ -19,19 +19,13 @@ class Post {
     function execute($arr) {
         if (isset($arr[1])) {
             if ($arr[1]=="create") {
-                //echo "create";
                 $data = json_decode(file_get_contents("php://input"));
-
                 $user_id = $data->user_id;
                 $version = $data->version;
                 $blocks = $data->blocks;
                 $this->view->createRespond($this->model->create($user_id, $version, $blocks));
             }
             else if ($arr[1]=="read") {
-                //echo "read\n";
-                //echo $arr[2];
-                //echo is_integer($arr[2]);
-                //echo ((int)$arr[2])>0;
                 if (isset($arr[2]) && is_numeric($arr[2]) && (int)$arr[2]>0) {
                     //echo "right para";
                     $result = $this->model->readID((int)$arr[2]);
