@@ -170,13 +170,9 @@ class UserModel extends Model {
     public function login($username, $password) {
         require_once "user-auth/VmtHandler.php";
         try{
-            // check if email is valid
-            if (strlen($email) < 5) throw new Exception("Imvalid email");
-            else if (strpos($email, "@") > strrpos($email, ".")) throw new Exception("Imvalid email");
-
             // check if username valid
             if (strlen($username) < 5 || strlen($username) > 50 || is_numeric($username[0])) 
-                throw new Exception("Imvalid username");
+                throw new Exception("Invalid username");
 
             // check if password valid
             if (strlen($password) < 5 || strlen($password) > 50) 
