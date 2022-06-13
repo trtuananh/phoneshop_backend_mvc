@@ -48,7 +48,7 @@ class ProductModel extends Model {
             '.$communicate_wifi.', '.$communicate_bluetooth.', '.$communicate_GPS.', '.$design_size.', '.$design_weight.', 
             '.$design_chatluong.', '.$design_khung_vien.', NOW(), NOW())';
 
-            $stmt = mysqli_query($this->conn, $query);    
+            $stmt = mysqli_query($this->conn, $query);
             if($stmt) {
                 return true;
             }
@@ -395,6 +395,9 @@ class ProductModel extends Model {
         RAM_bo_nho_trong > '.$RAM_bo_nho_trong_low_threshold.' AND RAM_bo_nho_trong < '.$RAM_bo_nho_trong_high_threshold.';';
         $stmt = mysqli_query($this->conn, $query);
         $result = array(); 
+        if (!$stmt)
+            return $result;
+        
         while($row = mysqli_fetch_assoc($stmt))
         {
             $result[] = $row;

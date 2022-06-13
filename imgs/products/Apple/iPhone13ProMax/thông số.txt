@@ -1,0 +1,16 @@
+Màn hình: 1284 x 2778 Pixels
+Công nghệ màn hình: OLED
+Màn hình rộng: 6.7" - Tần số quét 120 Hz
+Camera sau: 3 camera 12 MP
+Camera trước:12 MP
+RAM: 6 GB
+Chip xử lý (CPU): Apple A15 Bionic 6 nhân
+Bộ nhớ trong: 128/256/512 GB
+Dung lượng pin: 4352 mAh
+SIM: 1 Nano SIM & 1 eSIM,Hỗ trợ 5G
+Kích thước, khối lượng: Dài 160.8 mm - Ngang 78.1 mm - Dày 7.65 mm - Nặng 240 g
+
+// gia ban :
+128GB : 33.990.000
+256GB : 36.990.000
+512GB : 43.290.000
