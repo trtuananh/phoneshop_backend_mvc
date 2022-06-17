@@ -66,7 +66,8 @@ create table products (
 create table orders (
 	id			int		primary key		auto_increment,
     user_id		int,
-    time		timestamp 	default current_timestamp on update current_timestamp
+    time		timestamp 	default current_timestamp on update current_timestamp,
+    foreign key (user_id) references users (id) on update cascade on delete cascade
 );
 
 create table orders_product (
@@ -81,7 +82,8 @@ create table posts (
 	id			int		primary key		auto_increment,
     time		timestamp 	default current_timestamp on update current_timestamp,
     user_id		int,
-    version     varchar(30)
+    version     varchar(30),
+    foreign key (user_id) references users (id) on update cascade on delete cascade
 );
 
 create table blocks (
@@ -121,7 +123,9 @@ create table reviews (
     user_id		int,
     star_rating	float,
     content		text,
-    time        timestamp   default current_timestamp on update current_timestamp
+    time        timestamp   default current_timestamp on update current_timestamp,
+    foreign key (user_id) references users (id) on update cascade on delete cascade,
+    foreign key (product_id) references products (id) on update cascade on delete cascade
 );
 
 
